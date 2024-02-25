@@ -11,6 +11,13 @@ builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    });
+});
 
 var app = builder.Build();
 
@@ -24,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
@@ -33,7 +40,7 @@ app.MapControllers();
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 
-// This is equivalent to the dotnet CLI(dotnet ef database update) operation to create the database tables
+// This is equivalent to the dotnet CLI(dotnet ef database update) operation to create the database table
 // based on the migration
 try
 {
