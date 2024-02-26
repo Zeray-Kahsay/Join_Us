@@ -1,7 +1,6 @@
 ﻿using Application;
 using Application.Activities;
 using Domain;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API;
@@ -9,17 +8,17 @@ namespace API;
 public class ActivitiesController : BaseApiController
 {
   [HttpGet]
-  public async Task<ActionResult<List<Activity>>> GetActivities()
+  public async Task<IActionResult> GetActivities()
   {
     // Sends a Query to the Handler(mediator which enables Application layer and API
     // communicate)
-    return await Mediator.Send(new List.Query());
+    return HandleResult(await Mediator.Send(new List.Query()));
   }
 
   [HttpGet("{id}")]
   public async Task<ActionResult<Activity>> GetActivity(Guid id)
   {
-    return await Mediator.Send(new Details.Query{Id = id});
+    return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
   }
 
   [HttpPost]
