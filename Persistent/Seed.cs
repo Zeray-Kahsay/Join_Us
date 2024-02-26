@@ -8,11 +8,11 @@ namespace Persistent;
 
 public class Seed
 {
-  public static async Task SeedData(DataContext context)
-        {
-            if (context.Activities.Any()) return;
-            
-            var activities = new List<Activity>
+    public static async Task SeedData(DataContext context)
+    {
+        if (context.Activities.Any()) return;
+
+        var activities = new List<Activity>
             {
                 new Activity
                 {
@@ -106,7 +106,7 @@ public class Seed
                 }
             };
 
-            await context.Activities.AddRangeAsync(activities);
-            await context.SaveChangesAsync();
-        }
+        await context.Activities.AddRangeAsync(activities);
+        await context.SaveChangesAsync();
+    }
 }
