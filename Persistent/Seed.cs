@@ -20,7 +20,7 @@ public class Seed
                     Date = DateTime.UtcNow.AddMonths(-2),
                     Description = "Activity 2 months ago",
                     Category = "drinks",
-                    City = "London",
+                    City = "Kristiansand",
                     Venue = "Pub",
                 },
                 new Activity
@@ -29,7 +29,7 @@ public class Seed
                     Date = DateTime.UtcNow.AddMonths(-1),
                     Description = "Activity 1 month ago",
                     Category = "culture",
-                    City = "Paris",
+                    City = "Oslo",
                     Venue = "Louvre",
                 },
                 new Activity
@@ -38,7 +38,7 @@ public class Seed
                     Date = DateTime.UtcNow.AddMonths(1),
                     Description = "Activity 1 month in future",
                     Category = "culture",
-                    City = "London",
+                    City = "Bergen",
                     Venue = "Natural History Museum",
                 },
                 new Activity
