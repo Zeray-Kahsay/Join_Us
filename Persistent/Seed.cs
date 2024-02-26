@@ -47,7 +47,7 @@ public class Seed
                     Date = DateTime.UtcNow.AddMonths(2),
                     Description = "Activity 2 months in future",
                     Category = "music",
-                    City = "London",
+                    City = "Oslo",
                     Venue = "O2 Arena",
                 },
                 new Activity
@@ -56,7 +56,7 @@ public class Seed
                     Date = DateTime.UtcNow.AddMonths(3),
                     Description = "Activity 3 months in future",
                     Category = "drinks",
-                    City = "London",
+                    City = "Oslo",
                     Venue = "Another pub",
                 },
                 new Activity
@@ -65,7 +65,7 @@ public class Seed
                     Date = DateTime.UtcNow.AddMonths(4),
                     Description = "Activity 4 months in future",
                     Category = "drinks",
-                    City = "London",
+                    City = "Oslo",
                     Venue = "Yet another pub",
                 },
                 new Activity
@@ -74,7 +74,7 @@ public class Seed
                     Date = DateTime.UtcNow.AddMonths(5),
                     Description = "Activity 5 months in future",
                     Category = "drinks",
-                    City = "London",
+                    City = "Oslo",
                     Venue = "Just another pub",
                 },
                 new Activity
@@ -83,7 +83,7 @@ public class Seed
                     Date = DateTime.UtcNow.AddMonths(6),
                     Description = "Activity 6 months in future",
                     Category = "music",
-                    City = "London",
+                    City = "Oslo",
                     Venue = "Roundhouse Camden",
                 },
                 new Activity
@@ -92,7 +92,7 @@ public class Seed
                     Date = DateTime.UtcNow.AddMonths(7),
                     Description = "Activity 2 months ago",
                     Category = "travel",
-                    City = "London",
+                    City = "Oslo",
                     Venue = "Somewhere on the Thames",
                 },
                 new Activity
@@ -101,7 +101,7 @@ public class Seed
                     Date = DateTime.UtcNow.AddMonths(8),
                     Description = "Activity 8 months in future",
                     Category = "film",
-                    City = "London",
+                    City = "Oslo",
                     Venue = "Cinema",
                 }
             };
