@@ -9,7 +9,7 @@ namespace Application;
 
 public class Create
 {
-  public class Command : IRequest
+  public class Command : IRequest<Result<Unit>>
   {
     public Activity Activity { get; set; } // paramter to the Handler from API
   }
@@ -23,7 +23,7 @@ public class Create
     }
   }
 
-  public class Handler : IRequestHandler<Command>
+  public class Handler : IRequestHandler<Command, Result<Unit>>
   {
     private readonly DataContext _context;
     public Handler(DataContext context)
@@ -32,14 +32,17 @@ public class Create
 
     }
 
-    public async Task Handle(Command request, CancellationToken cancellationToken)
+    public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
     {
       // At this point of time, we work only in memory, not accessing the Db
       // and therefore don't await and Async methods 
       _context.Activities.Add(request.Activity);
 
       // Now, we accessing the DB
-      await _context.SaveChangesAsync();
+      var result = await _context.SaveChangesAsync() > 0;
+      if (!result) return Result<Unit>.Failure("Failed to create activity");
+
+      return Result<Unit>.Success(Unit.Value);
     }
   }
 }

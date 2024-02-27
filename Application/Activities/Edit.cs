@@ -1,17 +1,13 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
 using Persistent;
 
 namespace Application;
-
 public class Edit
 {
-
-  public class Command : IRequest
+  public class Command : IRequest<Result<Unit>>
   {
     public Activity Activity { get; set; }
   }
@@ -20,29 +16,38 @@ public class Edit
   {
     public CommandValidator()
     {
-      RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
+      RuleFor(a => a.Activity).SetValidator(new ActivityValidator());
     }
   }
 
-  public class Handler : IRequestHandler<Command>
+  public class Handler : IRequestHandler<Command, Result<Unit>>
   {
     private readonly DataContext _context;
     private readonly IMapper _mapper;
     public Handler(DataContext context, IMapper mapper)
     {
-      _context = context;
       _mapper = mapper;
+      _context = context;
 
     }
-    public async Task Handle(Command request, CancellationToken cancellationToken)
+    public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
     {
-      var activity = await _context.Activities.FindAsync(request.Activity.Id);
-      _mapper.Map(request.Activity, activity);
+      var activityDB = await _context.Activities.FindAsync(request.Activity.Id);
 
+      //map it to request.Activity to activityDB to edit and save into DB 
+      _mapper.Map(request.Activity, activityDB);
 
-      await _context.SaveChangesAsync();
+      // Check if the edition is successful
+      var result = await _context.SaveChangesAsync() > 0;
+
+      if (!result) return Result<Unit>.Failure("Unable to edit the activity");
+
+      return Result<Unit>.Success(Unit.Value);
 
     }
   }
+
+
+
 
 }
