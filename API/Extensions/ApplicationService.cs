@@ -1,6 +1,8 @@
 using Application;
+using Application.Core;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Persistent;
 
@@ -35,6 +37,9 @@ namespace API.Extensions
             // Fluent validation
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<Create>();
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUserAccessor, UserAccessor>(); // allows us to have access them from Application project
+
 
             return services;
 

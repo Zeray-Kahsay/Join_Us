@@ -30,6 +30,7 @@ public class ActivitiesController : BaseApiController
 
   }
 
+  [Authorize(Policy = "IsActivityHost")]
   [HttpPut("{id}")]
   public async Task<IActionResult> EditActivity(Guid id, Activity activity)
   {
@@ -42,11 +43,13 @@ public class ActivitiesController : BaseApiController
   public async Task<IActionResult> Delete(Guid id)
   {
     return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
-
-
   }
 
-
+  [HttpPost("{id}/attend")]
+  public async Task<ActionResult> Attend(Guid id)
+  {
+    return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = id }));
+  }
 
 
 }

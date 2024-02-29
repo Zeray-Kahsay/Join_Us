@@ -4,117 +4,233 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Identity;
+using Persistent;
 
-namespace Persistent;
-
-public class Seed
+namespace Persistence
 {
-    public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
+    public class Seed
     {
-        if (!userManager.Users.Any())
+        public static async Task SeedData(DataContext context,
+            UserManager<AppUser> userManager)
         {
-            var users = new List<AppUser>
+            if (!userManager.Users.Any() && !context.Activities.Any())
             {
-                new(){DisplayName = "Hansen", UserName = "hansen", Email = "hansen@gmail.com" },
-                new(){DisplayName = "Pedersen", UserName = "pedersen", Email = "pedersen@gmail.com" },
-                new(){DisplayName = "Magnus", UserName = "magnus", Email = "magnus@gmail.com" },
-                new(){DisplayName = "Ole", UserName = "ole", Email = "ole@gmail.com" },
-            };
+                var users = new List<AppUser>
+                {
+                    new AppUser
+                    {
+                        DisplayName = "Hansen",
+                        UserName = "hansen",
+                        Email = "hansen@gmail.com"
+                    },
+                    new AppUser
+                    {
+                        DisplayName = "Janett",
+                        UserName = "janet",
+                        Email = "janet@gmail.com"
+                    },
+                    new AppUser
+                    {
+                        DisplayName = "Tom",
+                        UserName = "tom",
+                        Email = "tom@gmail.com"
+                    },
+                };
 
-            foreach (var user in users)
-            {
-                await userManager.CreateAsync(user, "Pa$$w0rd"); // creates and saves, calling SaveChangesAsync not needed
+                foreach (var user in users)
+                {
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                }
+
+                var activities = new List<Activity>
+                {
+                    new() {
+                        Title = "Past Activity 1",
+                        Date = DateTime.UtcNow.AddMonths(-2),
+                        Description = "Activity 2 months ago",
+                        Category = "drinks",
+                        City = "Oslo",
+                        Venue = "Opera House",
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new() {
+                                AppUser = users[0],
+                                IsHost = true
+                            }
+                        }
+                    },
+                    new() {
+                        Title = "Past Activity 2",
+                        Date = DateTime.UtcNow.AddMonths(-1),
+                        Description = "Activity 1 month ago",
+                        Category = "culture",
+                        City = "Bergen",
+                        Venue = "Sentrum",
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new() {
+                                AppUser = users[0],
+                                IsHost = true
+                            },
+                            new() {
+                                AppUser = users[1],
+                                IsHost = false
+                            },
+                        }
+                    },
+                    new() {
+                        Title = "Future Activity 1",
+                        Date = DateTime.UtcNow.AddMonths(1),
+                        Description = "Activity 1 month in future",
+                        Category = "music",
+                        City = "Oslo",
+                        Venue = "Spektrum",
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new() {
+                                AppUser = users[2],
+                                IsHost = true
+                            },
+                            new() {
+                                AppUser = users[1],
+                                IsHost = false
+                            },
+                        }
+                    },
+                    new() {
+                        Title = "Future Activity 2",
+                        Date = DateTime.UtcNow.AddMonths(2),
+                        Description = "Activity 2 months in future",
+                        Category = "food",
+                        City = "Kristiansand",
+                        Venue = "ØST Agder",
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new() {
+                                AppUser = users[0],
+                                IsHost = true
+                            },
+                            new() {
+                                AppUser = users[2],
+                                IsHost = false
+                            },
+                        }
+                    },
+                    new() {
+                        Title = "Future Activity 3",
+                        Date = DateTime.UtcNow.AddMonths(3),
+                        Description = "Activity 3 months in future",
+                        Category = "drinks",
+                        City = "Stavanger",
+                        Venue = "Egon Restuarnt",
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new() {
+                                AppUser = users[1],
+                                IsHost = true
+                            },
+                            new() {
+                                AppUser = users[0],
+                                IsHost = false
+                            },
+                        }
+                    },
+                    new() {
+                        Title = "Future Activity 4",
+                        Date = DateTime.UtcNow.AddMonths(4),
+                        Description = "Activity 4 months in future",
+                        Category = "culture",
+                        City = "Trondhiem",
+                        Venue = "NTNU",
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new() {
+                                AppUser = users[1],
+                                IsHost = true
+                            }
+                        }
+                    },
+                    new() {
+                        Title = "Future Activity 5",
+                        Date = DateTime.UtcNow.AddMonths(5),
+                        Description = "Activity 5 months in future",
+                        Category = "IT Conference",
+                        City = "Oslo",
+                        Venue = "Blinern",
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new() {
+                                AppUser = users[0],
+                                IsHost = true
+                            },
+                            new() {
+                                AppUser = users[1],
+                                IsHost = false
+                            },
+                        }
+                    },
+                    new() {
+                        Title = "Future Activity 6",
+                        Date = DateTime.UtcNow.AddMonths(6),
+                        Description = "Activity 6 months in future",
+                        Category = "music",
+                        City = "Oslo",
+                        Venue = "O2 Arena",
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new() {
+                                AppUser = users[2],
+                                IsHost = true
+                            },
+                            new() {
+                                AppUser = users[1],
+                                IsHost = false
+                            },
+                        }
+                    },
+                    new() {
+                        Title = "Future Activity 7",
+                        Date = DateTime.UtcNow.AddMonths(7),
+                        Description = "Activity 7 months in future",
+                        Category = "travel",
+                        City = "Bergen",
+                        Venue = "All",
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new() {
+                                AppUser = users[0],
+                                IsHost = true
+                            },
+                            new() {
+                                AppUser = users[2],
+                                IsHost = false
+                            },
+                        }
+                    },
+                    new() {
+                        Title = "Future Activity 8",
+                        Date = DateTime.UtcNow.AddMonths(8),
+                        Description = "Activity 8 months in future",
+                        Category = "Turism",
+                        City = "Ålesund",
+                        Venue = "Sentrum",
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new() {
+                                AppUser = users[2],
+                                IsHost = true
+                            },
+                            new() {
+                                AppUser = users[1],
+                                IsHost = false
+                            },
+                        }
+                    }
+                };
+
+                await context.Activities.AddRangeAsync(activities);
+                await context.SaveChangesAsync();
             }
         }
-
-
-        if (context.Activities.Any()) return;
-
-        var activities = new List<Activity>
-            {
-                new() {
-                    Title = "Past Activity 1",
-                    Date = DateTime.UtcNow.AddMonths(-2),
-                    Description = "Activity 2 months ago",
-                    Category = "drinks",
-                    City = "Kristiansand",
-                    Venue = "Pub",
-                },
-                new() {
-                    Title = "Past Activity 2",
-                    Date = DateTime.UtcNow.AddMonths(-1),
-                    Description = "Activity 1 month ago",
-                    Category = "culture",
-                    City = "Oslo",
-                    Venue = "Louvre",
-                },
-                new() {
-                    Title = "Future Activity 1",
-                    Date = DateTime.UtcNow.AddMonths(1),
-                    Description = "Activity 1 month in future",
-                    Category = "culture",
-                    City = "Bergen",
-                    Venue = "Natural History Museum",
-                },
-                new() {
-                    Title = "Future Activity 2",
-                    Date = DateTime.UtcNow.AddMonths(2),
-                    Description = "Activity 2 months in future",
-                    Category = "music",
-                    City = "Oslo",
-                    Venue = "O2 Arena",
-                },
-                new() {
-                    Title = "Future Activity 3",
-                    Date = DateTime.UtcNow.AddMonths(3),
-                    Description = "Activity 3 months in future",
-                    Category = "drinks",
-                    City = "Oslo",
-                    Venue = "Another pub",
-                },
-                new() {
-                    Title = "Future Activity 4",
-                    Date = DateTime.UtcNow.AddMonths(4),
-                    Description = "Activity 4 months in future",
-                    Category = "drinks",
-                    City = "Oslo",
-                    Venue = "Yet another pub",
-                },
-                new() {
-                    Title = "Future Activity 5",
-                    Date = DateTime.UtcNow.AddMonths(5),
-                    Description = "Activity 5 months in future",
-                    Category = "drinks",
-                    City = "Oslo",
-                    Venue = "Just another pub",
-                },
-                new() {
-                    Title = "Future Activity 6",
-                    Date = DateTime.UtcNow.AddMonths(6),
-                    Description = "Activity 6 months in future",
-                    Category = "music",
-                    City = "Oslo",
-                    Venue = "Roundhouse Camden",
-                },
-                new() {
-                    Title = "Future Activity 7",
-                    Date = DateTime.UtcNow.AddMonths(7),
-                    Description = "Activity 2 months ago",
-                    Category = "travel",
-                    City = "Oslo",
-                    Venue = "Somewhere on the Thames",
-                },
-                new() {
-                    Title = "Future Activity 8",
-                    Date = DateTime.UtcNow.AddMonths(8),
-                    Description = "Activity 8 months in future",
-                    Category = "film",
-                    City = "Oslo",
-                    Venue = "Cinema",
-                }
-            };
-
-        await context.Activities.AddRangeAsync(activities);
-        await context.SaveChangesAsync();
     }
 }
