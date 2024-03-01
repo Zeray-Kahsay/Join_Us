@@ -6,24 +6,24 @@ using Persistent;
 
 namespace Infrastructure;
 
-public class IsHotRequirement : IAuthorizationRequirement
+public class IsHostRequirement : IAuthorizationRequirement
 {
 
 }
 
-public class IsHotRequirementHandler : AuthorizationHandler<IsHotRequirement>
+public class IsHostRequirementHandler : AuthorizationHandler<IsHostRequirement>
 {
-  public DataContext Dbcontext { get; }
   private readonly IHttpContextAccessor _httpContextAccessor;
   private readonly DataContext _dbcontext;
-  public IsHotRequirementHandler(DataContext dbcontext, IHttpContextAccessor httpContextAccessor)
+
+  public IsHostRequirementHandler(DataContext dbcontext, IHttpContextAccessor httpContextAccessor)
   {
     _dbcontext = dbcontext;
     _httpContextAccessor = httpContextAccessor;
 
   }
 
-  protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsHotRequirement requirement)
+  protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsHostRequirement requirement)
   {
     var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 

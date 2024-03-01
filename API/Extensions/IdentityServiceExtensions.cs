@@ -21,6 +21,7 @@ namespace API.Extensions
             })
             .AddEntityFrameworkStores<DataContext>(); // allows quering users from entity framework store
 
+            //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -34,14 +35,14 @@ namespace API.Extensions
                             ValidateAudience = false
                         };
                     });
-            services.AddAuthorization(opt =>
+            services.AddAuthorization((Action<AuthorizationOptions>)(opt =>
             {
-                opt.AddPolicy("IsActivityHost", policy =>
+                opt.AddPolicy("IsActivityHost", (Action<AuthorizationPolicyBuilder>)(policy =>
                 {
-                    policy.Requirements.Add(new IsHotRequirement());
-                });
-            });
-            services.AddTransient<IAuthorizationHandler, IsHotRequirementHandler>();
+                    policy.Requirements.Add(new IsHostRequirement());
+                }));
+            }));
+            services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
 
             services.AddScoped<TokenService>();
 
