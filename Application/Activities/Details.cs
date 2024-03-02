@@ -17,8 +17,10 @@ public class Details
   {
     private readonly DataContext _context;
     private readonly IMapper _mapper;
-    public Handler(DataContext context, IMapper mapper)
+    private readonly IUserAccessor _userAccessor;
+    public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
     {
+      _userAccessor = userAccessor;
       _mapper = mapper;
       _context = context;
 
@@ -26,7 +28,7 @@ public class Details
     public async Task<Result<ActivityDto>> Handle(Query request, CancellationToken cancellationToken)
     {
       var activity = await _context.Activities
-          .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+          .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
           .FirstOrDefaultAsync(x => x.Id == request.Id);
 
       return Result<ActivityDto>.Success(activity);
