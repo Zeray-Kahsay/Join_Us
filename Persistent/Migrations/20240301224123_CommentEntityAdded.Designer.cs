@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistent;
 
@@ -10,9 +11,11 @@ using Persistent;
 namespace Persistent.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240301224123_CommentEntityAdded")]
+    partial class CommentEntityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
@@ -146,7 +149,7 @@ namespace Persistent.Migrations
                     b.Property<Guid?>("ActivityId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("AuthorId")
+                    b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Body")
@@ -159,7 +162,7 @@ namespace Persistent.Migrations
 
                     b.HasIndex("ActivityId");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Comments");
                 });
@@ -339,13 +342,13 @@ namespace Persistent.Migrations
                         .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Domain.AppUser", "Author")
+                    b.HasOne("Domain.AppUser", "AppUser")
                         .WithMany()
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("AppUserId");
 
                     b.Navigation("Activity");
 
-                    b.Navigation("Author");
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Domain.Photo", b =>

@@ -42,7 +42,7 @@ public class ActivitiesController : BaseApiController
   [HttpDelete("{id}")]
   public async Task<IActionResult> Delete(Guid id)
   {
-    return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+    return HandleResult(await Mediator.Send(new Application.Activities.Delete.Command { Id = id }));
   }
 
   [HttpPost("{id}/attend")]

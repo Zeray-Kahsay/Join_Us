@@ -11,5 +11,6 @@ public class Activity
   public string Venue { get; set; }
   public bool IsCancelled { get; set; }
   // Initializing the collection enables us to add attendess/users later on
-  public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
+  public ICollection<ActivityAttendee> Attendees { get; set; } = [];
+  public ICollection<Comment> Comments { get; set; } = [];
 }

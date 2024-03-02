@@ -1,3 +1,4 @@
+using API;
 using API.Extensions;
 using API.Middleware;
 using Domain;
@@ -37,6 +38,7 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+app.MapHub<ChatHub>("/chat");
 
 // automatically cleans-up after it
 using var scope = app.Services.CreateScope();

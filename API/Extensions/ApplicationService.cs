@@ -41,6 +41,7 @@ namespace API.Extensions
             services.AddScoped<IUserAccessor, UserAccessor>(); // allows us to have access them from Application project
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+            services.AddSignalR();
 
 
             return services;
