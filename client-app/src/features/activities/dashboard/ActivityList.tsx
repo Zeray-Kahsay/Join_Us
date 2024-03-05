@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 
 const ActivityList = () => {
-  const [target, setTarget] = useState("");
+  const [target, setTarget] = useState(""); // points to a specific delete button
   const { activityStore } = useStore();
   const { deleteActivity, activitiesByDate, loading } = activityStore;
 
@@ -13,7 +13,7 @@ const ActivityList = () => {
     e: SyntheticEvent<HTMLButtonElement>,
     id: string
   ) => {
-    setTarget(e.currentTarget.name);
+    setTarget(e.currentTarget.name); // sets a single activity by id for deletion
     deleteActivity(id);
   };
 

@@ -10,7 +10,7 @@ export default class ActivityStore {
   selectedActivity: Activity | undefined = undefined;
   editMode = false;
   loading = false;
-  laodingInital = true;
+  laodingInital = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -23,6 +23,7 @@ export default class ActivityStore {
   }
 
   loadActivities = async () => {
+    this.setLoadingInitials(true);
     try {
       const activities = await agent.Activities.list();
       activities.forEach((activity) => {
@@ -37,13 +38,17 @@ export default class ActivityStore {
 
   loadActivity = async (id: string) => {
     let activity = this.getActivity(id);
-    if (activity) this.selectedActivity = activity;
-    else {
+    if (activity) {
+      this.selectedActivity = activity;
+      return activity;
+    } else {
       this.setLoadingInitials(true);
       try {
         activity = await agent.Activities.details(id);
+        runInAction(() => (this.selectedActivity = activity));
         this.setActivity(activity);
         this.setLoadingInitials(false);
+        return activity;
       } catch (error) {
         console.log(error);
         this.setLoadingInitials(false);
