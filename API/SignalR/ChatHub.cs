@@ -8,7 +8,7 @@ public class ChatHub(IMediator mediator) : Hub
 {
   private readonly IMediator _mediator = mediator;
 
-  // This method will be invoked from client side of the app by users to send a message 
+  // This method will be invoked by users from client side of the app to send a message 
   public async Task SendComment(CreateComment.Command command)
   {
     // The comment is a type of Result object

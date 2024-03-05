@@ -10,7 +10,7 @@ public class List
 {
   public class Query : IRequest<Result<List<UserProfile>>>
   {
-    public string Predicate { get; set; } // used for getting followers or following
+    public string Predicate { get; set; } //  gets followers or following
     public string Username { get; set; }
 
   }

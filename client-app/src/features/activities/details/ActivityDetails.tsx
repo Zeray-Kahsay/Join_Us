@@ -1,9 +1,11 @@
 import { Button, Card, Image } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
+//import { useParams } from "react-router-dom";
 
 const ActivityDetails = () => {
   const { activityStore } = useStore();
-  const { selectedActivity, openForm, cancelSelectedActivity } = activityStore;
+  const { selectedActivity } = activityStore;
+  //const params = useParams();
 
   if (!selectedActivity) return;
 
@@ -19,18 +21,8 @@ const ActivityDetails = () => {
       </Card.Content>
       <Card.Content extra>
         <Button.Group width="2">
-          <Button
-            onClick={() => openForm(selectedActivity.id)}
-            basic
-            color="blue"
-            content="Edit"
-          />
-          <Button
-            onClick={cancelSelectedActivity}
-            basic
-            color="grey"
-            content="Cancell"
-          />
+          <Button basic color="blue" content="Edit" />
+          <Button basic color="grey" content="Cancell" />
         </Button.Group>
       </Card.Content>
     </Card>
