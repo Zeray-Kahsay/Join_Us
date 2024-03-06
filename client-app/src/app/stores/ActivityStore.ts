@@ -22,6 +22,18 @@ export default class ActivityStore {
     );
   }
 
+  get groupedActivities() {
+    return Object.entries(
+      this.activitiesByDate.reduce((activities, activity) => {
+        const date = activity.date;
+        activities[date] = activities[date]
+          ? [...activities[date], activity]
+          : [activity];
+        return activities;
+      }, {} as { [key: string]: Activity[] })
+    );
+  }
+
   loadActivities = async () => {
     this.setLoadingInitials(true);
     try {
@@ -69,24 +81,6 @@ export default class ActivityStore {
   setLoadingInitials = (state: boolean) => {
     this.laodingInital = state;
   };
-
-  // selectActivity = (id: string) => {
-  //   //this.selectedActivity = this.activities.find((a) => a.id !== id);
-  //   this.selectedActivity = this.activityRegistry.get(id);
-  // };
-
-  // cancelSelectedActivity = () => {
-  //   this.selectedActivity = undefined;
-  // };
-
-  // openForm = (id?: string) => {
-  //   id ? this.selectActivity(id) : this.cancelSelectedActivity();
-  //   this.editMode = true;
-  // };
-
-  // closeForm = () => {
-  //   this.editMode = false;
-  // };
 
   createActivity = async (activity: Activity) => {
     this.loading = true;
