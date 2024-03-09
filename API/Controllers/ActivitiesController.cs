@@ -7,7 +7,7 @@ namespace API;
 
 public class ActivitiesController : BaseApiController
 {
-
+  [AllowAnonymous]
   [HttpGet]
   public async Task<IActionResult> GetActivities([FromQuery] PagingParams pagingParams)
   {

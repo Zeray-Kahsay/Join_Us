@@ -5,7 +5,7 @@ interface Props {
   placeholder: string;
   name: string;
   label?: string;
-  // type?: Date;
+  type?: string;
 }
 
 const MyTextInput = (props: Props) => {
