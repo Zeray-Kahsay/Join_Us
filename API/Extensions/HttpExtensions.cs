@@ -4,7 +4,7 @@ namespace API;
 
 public static class HttpExtensions
 {
-  // sends info to the client about pagination
+  // sends info about pagination options to the client 
   public static void AddPaginationHeader(this HttpResponse response, int currentPage,
       int itemsPerPage, int totalItems, int totalPages)
   {

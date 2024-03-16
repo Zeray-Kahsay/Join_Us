@@ -19,8 +19,9 @@ const ActivityDashboard = () => {
 
   return (
     <Grid>
-      <Grid.Column width="10"></Grid.Column>
-      <ActivityList />
+      <Grid.Column width="10">
+        <ActivityList />
+      </Grid.Column>
 
       <Grid.Column width="6">
         <ActivityFilters />

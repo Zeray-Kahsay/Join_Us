@@ -44,8 +44,8 @@ public class UpdateAttendance
       // Check if the current user is going to attend in the activity
       var attendance = activity.Attendees.FirstOrDefault(a => a.AppUser.UserName == user.UserName);
 
-      // Give the current user the power to cancell or not (toggling activity cancellation on UI) 
-      if (attendance is not null && hostUsername == user.UserName)
+      // Give the current user the power to cancel or not (toggling activity cancellation on UI) 
+      if (attendance != null && hostUsername == user.UserName)
         activity.IsCancelled = !activity.IsCancelled;
 
       //  add the current user to an activity 

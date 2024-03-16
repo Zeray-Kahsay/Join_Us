@@ -42,7 +42,7 @@ public class Create
       {
         AppUser = user,
         Activity = request.Activity,
-        IsHost = false
+        IsHost = true
       };
 
       // Add the user to the activity 
