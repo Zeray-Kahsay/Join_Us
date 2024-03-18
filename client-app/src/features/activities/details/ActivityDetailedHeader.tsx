@@ -55,7 +55,7 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                   Hosted by
                   <strong>
                     <Link to={`/profiles/${activity.host?.username}`}>
-                      {activity.host?.displayName}
+                      {" " + activity.hostUsername.toLocaleUpperCase()}
                     </Link>
                   </strong>
                 </p>
@@ -66,6 +66,44 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
       </Segment>
       <Segment clearing attached="bottom">
         {activity.isHost ? (
+          <>
+            <Button
+              color={activity.isCancelled ? "green" : "red"}
+              floated="left"
+              basic
+              content={
+                activity.isCancelled
+                  ? "Re-activate activity"
+                  : "Cancel Activity"
+              }
+              onClick={cancelActivityToggle}
+              loading={loading}
+            />
+            <Button
+              as={Link}
+              to={`/manage/${activity.id}`}
+              color="orange"
+              floated="right"
+              disabled={activity.isCancelled}
+            >
+              Manage Event
+            </Button>
+          </>
+        ) : activity.isGoing ? (
+          <Button onClick={updateAttendance} loading={loading}>
+            Cancel attendance
+          </Button>
+        ) : (
+          <Button
+            disabled={activity.isCancelled}
+            onClick={updateAttendance}
+            loading={loading}
+            color="teal"
+          >
+            Join Activity
+          </Button>
+        )}
+        {/* {activity.isHost ? (
           <>
             <Button
               color={activity.isCancelled ? "green" : "red"}
@@ -97,7 +135,7 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
           <Button loading={loading} onClick={updateAttendance} color="teal">
             Join Activity
           </Button>
-        )}
+        )} */}
       </Segment>
     </Segment.Group>
   );

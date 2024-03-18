@@ -40,6 +40,7 @@ export class Activity implements IActivity {
   isHost: boolean = false;
   host?: Profile;
   attendees?: Profile[];
+  username?: string = "";
 }
 
 export class ActivityFormValues {

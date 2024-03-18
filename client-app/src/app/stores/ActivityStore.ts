@@ -51,18 +51,18 @@ export default class ActivityStore {
   };
 
   loadActivity = async (id: string) => {
-    let activity = this.getActivity(id);
+    let activity = this.getActivity(id); // from activity registry
     if (activity) {
       this.selectedActivity = activity;
       return activity;
     } else {
       this.setLoadingInitials(true);
       try {
-        activity = await agent.Activities.details(id);
+        activity = await agent.Activities.details(id); // from Server
         runInAction(() => (this.selectedActivity = activity));
         this.setActivity(activity);
         this.setLoadingInitials(false);
-        return activity;
+        return activity; // here are some bugs e.g no isGoing and isHost are returned
       } catch (error) {
         console.log(error);
         this.setLoadingInitials(false);
