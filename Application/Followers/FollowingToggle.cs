@@ -28,7 +28,7 @@ public class FollowingToggle
 
       var target = await _context.Users.FirstOrDefaultAsync(u => u.UserName == request.TargetUsername);
 
-      // Check the target as it comes along with the request
+      // Check the target which comes with the request
       if (target is null) return null;
 
       // Get the pair from DB if any

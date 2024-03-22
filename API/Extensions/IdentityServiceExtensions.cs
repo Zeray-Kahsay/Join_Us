@@ -48,6 +48,7 @@ namespace API.Extensions
                             }
                         };
                     });
+            // policy-based authorization
             services.AddAuthorization((Action<AuthorizationOptions>)(opt =>
             {
                 opt.AddPolicy("IsActivityHost", (Action<AuthorizationPolicyBuilder>)(policy =>
@@ -55,6 +56,7 @@ namespace API.Extensions
                     policy.Requirements.Add(new IsHostRequirement());
                 }));
             }));
+            // adds this service to every request 
             services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
 
             services.AddScoped<TokenService>();
